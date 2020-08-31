@@ -2,5 +2,7 @@
 
 if [ ! -d env ]
 then
-   conda create -p ./env nodejs=8.11.4
+   conda create -py ./env nodejs=8.11.4
+   conda install -py ./env mongodb
 fi
+
