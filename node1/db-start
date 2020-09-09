@@ -1,4 +1,4 @@
 #!/bin/bash
 
 mkdir -p db
-mongod --dbpath db
+mongod --dbpath db --logpath db/log
