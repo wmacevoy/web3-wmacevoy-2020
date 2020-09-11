@@ -1,4 +1,52 @@
 #!/bin/bash
 
-mkdir -p db
+# Get directory of this script as DIR...
+#
+#  (https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself)
+#
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# Setup conda for this shell
+#
+# https://stackoverflow.com/questions/34534513/calling-conda-source-activate-from-bash-script
+# 
+eval "$("$HOME/anaconda3/bin/conda" shell.bash hook)"
+
+# Create local conda environment with mongod
+if [ ! -x "$DIR/env/bin/mongod" ]
+then
+    echo "warning: missing mongo server $DIR/env/bin/mongod"
+    echo "warning: re-running $DIR/setup.sh to repair this..."
+    "$DIR/setup.sh"
+    if [ ! -x "$DIR/env/bin/mongod" ]
+    then
+	echo "Setup failed to make server.  Exiting."
+	exit 1
+    fi
+fi
+
+conda deactivate
+
+if [ "$(which mongod)" == "$DIR/env/bin/mongod" ]
+then
+    echo "Local conda environment should be deactivated, but is active."
+    exit 1
+fi
+
+conda activate "$DIR/env"
+
+if [ "$(which mongod)" != "$DIR/env/bin/mongod" ]
+then
+    echo "Local conda environment should be activated, but is not active."
+    exit 1
+fi
+
+if [ ! -d "$DIR/db" ]
+then
+    mkdir "$DIR/db"
+fi
+
+echo "type ^C to exit the server..."
 mongod --dbpath db --logpath db/log
+echo "Mongo server exited with code $?"
+read -n 1 -r -s -p $'Press enter to close window...\n'
