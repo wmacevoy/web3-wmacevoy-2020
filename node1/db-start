@@ -47,6 +47,6 @@ then
 fi
 
 echo "type ^C to exit the server..."
-mongod --dbpath db --logpath db/log
+mongod --dbpath "$DIR/db" --logpath "$DIR/db/log"
 echo "Mongo server exited with code $?"
 read -n 1 -r -s -p $'Press enter to close window...\n'
