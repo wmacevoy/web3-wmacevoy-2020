@@ -1,6 +1,6 @@
 # REST API Tutorial
 
-# This was cloned and moved into thie directory as a sample project from https://github.com/makinhs/rest-api-tutorial
+Cloned from: https://github.com/makinhs/rest-api-tutorial.git
 
 This sample is published as part of the blog article at www.toptal.com/blog:
 

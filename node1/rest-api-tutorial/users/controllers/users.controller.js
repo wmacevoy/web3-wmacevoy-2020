@@ -1,5 +1,6 @@
 const UserModel = require('../models/users.model');
 const crypto = require('crypto');
+const { strict } = require('assert');
 
 exports.insert = (req, res) => {
     let salt = crypto.randomBytes(16).toString('base64');
@@ -9,12 +10,14 @@ exports.insert = (req, res) => {
     UserModel.createUser(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});
+            console.log("created user sucessfully.");
         });
 };
 
 exports.list = (req, res) => {
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
     let page = 0;
+    console.log('list page ' + str(limit) + ' limit ' + str(limit));
     if (req.query) {
         if (req.query.page) {
             req.query.page = parseInt(req.query.page);
