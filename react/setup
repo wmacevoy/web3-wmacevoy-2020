@@ -23,5 +23,7 @@ fi
 
 if [ ! -d "$DIR/my-app" ]
 then
-    (cd "$DIR" && npx create-react-app my-app )
+    conda activate "$DIR/env"
+    cd "$DIR"
+    npx create-react-app my-app
 fi
