@@ -33,11 +33,19 @@ then
     conda install -y -c conda-forge google-cloud-sdk
 fi
 
+if [ ! grep "firebase-functions" "$DIR/functions/functions/package.json" ]
+then
+    conda activate "$DIR/env"
+    cd "$DIR/functions/functions"
+    npm install --save firebase-functions
+
+fi
+
 # Create GCloud Identit token
 if [ ! -r "$DIR/env/.gcloud_token" ]
 then
     conda activate "$DIR/env"
-    if gcloud login
+    if gcloud auth login
     then
         GCLOUD_IDENTITY_TOKEN=$(gcloud auth print-identity-token)
         echo $GCLOUD_IDENTITY_TOKEN > "$DIR/env/.gcloud_token"

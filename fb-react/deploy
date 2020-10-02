@@ -27,7 +27,9 @@ done
 echo firebase functions:config:set "${sets[@]}"
 cd "$DIR/functions"
 firebase login
+firebase use $FIREBASE_PROJECT_ID
 firebase functions:config:set "${sets[@]}"
+npm install
 firebase deploy --only functions
 curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
   $FIREBASE_FUNCTIONS_URL/hello
