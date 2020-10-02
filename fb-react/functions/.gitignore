@@ -23,38 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # firebase
-
-Skip to content
-Search or jump to…
-
-Pulls
-Issues
-Marketplace
-Explore
- 
-@wmacevoy 
-FirebaseExtended
-/
-firebase-continue
-48
-34
-10
-Code
-Issues
-1
-Pull requests
-Actions
-Projects
-Security
-Insights
-firebase-continue/.gitignore
-@AndreasRicci
-AndreasRicci (iOS Library & Sample) Add iOS library v0.1.0 and finish iOS sample a…
-…
-Latest commit b65435e on Aug 11, 2017
- History
- 1 contributor
-92 lines (76 sloc)  1.91 KB
   
 #
 # Copyright (c) 2017 Google Inc. All Rights Reserved.
@@ -149,16 +117,4 @@ samples/ios/Continote/Continote/FCNContinue.m
 # Misc.
 .DS_Store
 *.swp
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
 

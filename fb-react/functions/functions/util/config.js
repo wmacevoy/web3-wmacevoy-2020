@@ -1,8 +1,12 @@
+const functions = require('firebase-functions');
+const config = functions.config();
+
 module.exports = {
-  apiKey: 'AIzaSyBGE61bBXSyRfOccvujvR8VjWfB1BjW-Og',
-  authDomain: 'socialape-d081e.firebaseapp.com',
-  databaseURL: 'https://socialape-d081e.firebaseio.com',
-  projectId: 'socialape-d081e',
-  storageBucket: 'socialape-d081e.appspot.com',
-  messagingSenderId: '354040522108'
+    apiKey: config.envs.firebase_api_key,
+    authDomain: config.envs.firebase_auth_domain,
+    databaseURL: config.envs.firebase_config_database_url,
+    projectId: config.envs.firebase_project_id,
+    storageBucket: config.envs.firebase_storage_bucket,
+    messagingSenderId: config.envs.firebase_sender_id
 };
+

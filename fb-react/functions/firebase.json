@@ -1,1 +1,8 @@
-{}
+{
+    "projects" : {
+	"default" :  "web3-fall2020"
+    },
+    "functions" : {
+	"runtime": "nodejs10"
+    }
+}
