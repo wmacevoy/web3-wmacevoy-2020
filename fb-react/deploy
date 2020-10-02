@@ -17,7 +17,7 @@ conda activate "$DIR/env"
 . "$DIR/env/.env"
 
 sets=()
-for VAR in $(cat env/.env | sed -e 's/=.*//')
+for VAR in $(egrep '^[A-Za-z0-9_]+=' env/.env | sed -e 's/=.*//')
 do
    var=$(echo $VAR | tr '[:upper:]' '[:lower:]')
    value=$(eval echo \$$VAR)
@@ -29,3 +29,5 @@ cd "$DIR/functions"
 firebase login
 firebase functions:config:set "${sets[@]}"
 firebase deploy --only functions
+curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
+  $FIREBASE_FUNCTIONS_URL/hello

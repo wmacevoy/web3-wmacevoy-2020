@@ -7,6 +7,8 @@ app.use(cors());
 
 const { db } = require('./util/admin');
 
+const config = require('./util/config');
+
 const {
   getAllScreams,
   postOneScream,
@@ -26,6 +28,12 @@ const {
   markNotificationsRead
 } = require('./handlers/users');
 
+const {
+  hello
+} = require('./handlers/hello');
+
+app.get('/hello',hello);
+
 // Scream routes
 app.get('/screams', getAllScreams);
 app.post('/scream', FBAuth, postOneScream);
@@ -44,10 +52,9 @@ app.get('/user', FBAuth, getAuthenticatedUser);
 app.get('/user/:handle', getUserDetails);
 app.post('/notifications', FBAuth, markNotificationsRead);
 
-exports.api = functions.region('europe-west1').https.onRequest(app);
-
+exports.api = functions.region(config.region).https.onRequest(app);
 exports.createNotificationOnLike = functions
-  .region('europe-west1')
+  .region(config.region)
   .firestore.document('likes/{id}')
   .onCreate((snapshot) => {
     return db
@@ -70,8 +77,11 @@ exports.createNotificationOnLike = functions
       })
       .catch((err) => console.error(err));
   });
+
+// exports.hello = functions.region(config.region).onRequest(hello);
+
 exports.deleteNotificationOnUnLike = functions
-  .region('europe-west1')
+  .region(config.region)
   .firestore.document('likes/{id}')
   .onDelete((snapshot) => {
     return db
@@ -83,7 +93,7 @@ exports.deleteNotificationOnUnLike = functions
       });
   });
 exports.createNotificationOnComment = functions
-  .region('europe-west1')
+  .region(config.region)
   .firestore.document('comments/{id}')
   .onCreate((snapshot) => {
     return db
@@ -111,7 +121,7 @@ exports.createNotificationOnComment = functions
   });
 
 exports.onUserImageChange = functions
-  .region('europe-west1')
+  .region(config.region)
   .firestore.document('/users/{userId}')
   .onUpdate((change) => {
     console.log(change.before.data());
@@ -134,7 +144,7 @@ exports.onUserImageChange = functions
   });
 
 exports.onScreamDelete = functions
-  .region('europe-west1')
+  .region(config.region)
   .firestore.document('/screams/{screamId}')
   .onDelete((snapshot, context) => {
     const screamId = context.params.screamId;

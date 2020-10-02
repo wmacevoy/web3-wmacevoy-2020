@@ -4,7 +4,10 @@ const config = require("../util/config");
 const { uuid } = require("uuidv4");
 
 const firebase = require("firebase");
-firebase.initializeApp(config);
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
+}
 
 const {
   validateSignupData,

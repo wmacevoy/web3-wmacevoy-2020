@@ -33,6 +33,17 @@ then
     conda install -y -c conda-forge google-cloud-sdk
 fi
 
+# Create GCloud Identit token
+if [ ! -r "$DIR/env/.gcloud_token" ]
+then
+    conda activate "$DIR/env"
+    if gcloud login
+    then
+        GCLOUD_IDENTITY_TOKEN=$(gcloud auth print-identity-token)
+        echo $GCLOUD_IDENTITY_TOKEN > "$DIR/env/.gcloud_token"
+    fi
+fi
+
 # if [ ! -r "$DIR/env/.env" ]
 # then
 #     conda activate "$DIR/env"
