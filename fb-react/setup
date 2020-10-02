@@ -27,6 +27,14 @@ then
     npm install -g firebase-tools
 fi
 
+if [ ! -r "$DIR/env/.env" ]
+then
+    conda activate "$DIR/env"
+    firebase login:ci
+    echo "Save the reported auth token as FIREBASE_TOKEN='....' in $DIR/env/.env"
+    echo "Do NOT put $DIR/env/.env in the repo!"
+fi
+
 # if [ ! -d "$DIR/my-app" ]
 # then
 #    conda activate "$DIR/env"
