@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Get directory of this script as DIR...
+#
+#  (https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself)
+#
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# Setup conda for this shell
+#
+# https://stackoverflow.com/questions/34534513/calling-conda-source-activate-from-bash-script
+# 
+eval "$("$HOME/anaconda3/bin/conda" shell.bash hook)"
+
+conda activate "$DIR/env"
+
+. "$DIR/env/.env"
+
+sets=()
+for VAR in $(cat env/.env | sed -e 's/=.*//')
+do
+   var=$(echo $VAR | tr '[:upper:]' '[:lower:]')
+   value=$(eval echo \$$VAR)
+   sets+=("envs.$var=$value")
+done
+
+echo firebase functions:config:set "${sets[@]}"
+cd "$DIR/functions"
+firebase login
+firebase functions:config:set "${sets[@]}"
+firebase deploy --only functions

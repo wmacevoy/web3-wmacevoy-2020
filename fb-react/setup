@@ -27,13 +27,26 @@ then
     npm install -g firebase-tools
 fi
 
-if [ ! -r "$DIR/env/.env" ]
+if [ ! -x "$DIR/bin/gcloud" ]
 then
     conda activate "$DIR/env"
-    firebase login:ci
-    echo "Save the reported auth token as FIREBASE_TOKEN='....' in $DIR/env/.env"
-    echo "Do NOT put $DIR/env/.env in the repo!"
+    conda install -y -c conda-forge google-cloud-sdk
 fi
+
+# if [ ! -r "$DIR/env/.env" ]
+# then
+#     conda activate "$DIR/env"
+#     firebase login:ci
+#     echo "Save the reported auth token as FIREBASE_TOKEN='....' in $DIR/env/.env"
+#     echo "Do NOT put $DIR/env/.env in the repo!"
+#     echo "Re-run setup when this is done."
+# fi
+
+# if [ -r "$DIR/env/.env" -a "$FIREBASE_TOKEN" == "" ]
+# then
+#    eval $(grep FIREBASE_TOKEN "$DIR/env/.env")
+#   export FIREBASE_TOKEN
+# fi
 
 # if [ ! -d "$DIR/my-app" ]
 # then
