@@ -18,32 +18,45 @@ eval "$("$HOME/anaconda3/bin/conda" shell.bash hook)"
 
 if [ ! -d "$DIR/env" ]
 then
+    echo "creating nodejs envirornment in $DIR/env..."
     conda create -y -p "$DIR/env" nodejs
 fi
 
-if [ ! -x "$DIR/bin/firebase" ]
+if [ ! -x "$DIR/env/bin/firebase" ]
 then
+    echo "add firebase tools in $DIR/env..."
     conda activate "$DIR/env"
     npm install -g firebase-tools
 fi
 
-if [ ! -x "$DIR/bin/gcloud" ]
+if [ ! -x "$DIR/env/bin/gcloud" ]
 then
+    echo "add gcloud tools in $DIR/env..."
     conda activate "$DIR/env"
     conda install -y -c conda-forge google-cloud-sdk
 fi
 
-if [ ! grep "firebase-functions" "$DIR/functions/functions/package.json" ]
+if ! grep "firebase-functions" "$DIR/functions/functions/package.json"
 then
+    echo "add firebase functions to functions server"
     conda activate "$DIR/env"
     cd "$DIR/functions/functions"
     npm install --save firebase-functions
 
 fi
 
+if ! grep "firebase-admin" "$DIR/functions/functions/package.json"
+then
+    echo "add firebase admin to functions server"
+    conda activate "$DIR/env"
+    cd "$DIR/functions/functions"
+    npm install --save firebase-admin
+
+fi
 # Create GCloud Identit token
 if [ ! -r "$DIR/env/.gcloud_token" ]
 then
+    echo "Create gcloud identity token..."
     conda activate "$DIR/env"
     if gcloud auth login
     then
