@@ -31,6 +31,7 @@ firebase use $FIREBASE_PROJECT_ID
 firebase functions:config:set "${sets[@]}"
 npm install
 gcloud config set functions/region $FIREBASE_REGION
-firebase deploy --only functions
+firebase functions:config:get > .runtimeconfig.json
+firebase serve --only functions
 curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
   $FIREBASE_FUNCTIONS_URL/hello
