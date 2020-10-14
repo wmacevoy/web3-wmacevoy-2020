@@ -17,3 +17,4 @@ redux
 
 I cloned the reference repositories and added the current source as client (front-end) and functions (microservices), and added a node .gitignore.
 
+new stuff
